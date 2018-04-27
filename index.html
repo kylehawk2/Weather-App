@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather App</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"Access-Control-Allow-Origin></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+           $('form').submit(function(){
+            var api_key = '5998665a74c35d91cc5eb086353088d2';
+            var city = $('input#city').val();
+            $.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${api_key}`, function(res){
+                console.log(res)
+                var html = '';
+                html += `<p> ${res['name']}: ${res['weather'][0]['description']} </p>`;
+                html += `<p> Temperature:${res['main']['temp']} F</p>`;
+                html += `<p> Coord: ${res['coord'].lat}, ${res['coord'].lon}`
+                $('#results').html(html);
+            }, 'jsonp');
+            return false
+           });
+        });
+    </script>
+</head>
+<body>
+    <div id="weather">
+        <form>
+            <label for="city">City:
+                <input type='text' name='city' id='city'/>
+            </label>
+            <input type='submit' name='submit'/>
+        </form>
+        <div id="results"></div>
+    </div>
+</body>
+</html>
